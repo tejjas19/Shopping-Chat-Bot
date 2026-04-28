@@ -9,11 +9,16 @@ import { notFound, errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 
+const defaultLocalOrigins = ['http://localhost:5173', 'http://127.0.0.1:5173'];
+const configuredOrigins = process.env.CLIENT_URL
+  ? process.env.CLIENT_URL.split(',').map((origin) => origin.trim()).filter(Boolean)
+  : defaultLocalOrigins;
+
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.CLIENT_URL ? process.env.CLIENT_URL.split(',') : '*',
-    credentials: true
+    origin: configuredOrigins,
+    credentials: false
   })
 );
 app.use(express.json({ limit: '2mb' }));
