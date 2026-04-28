@@ -33,6 +33,15 @@ app.use(
   })
 );
 
+app.get('/', (req, res) => {
+  res.json({
+    ok: true,
+    message: 'Shopping Chat Bot API is running.',
+    health: '/api/health',
+    api: '/api'
+  });
+});
+
 app.get('/api/health', (req, res) => {
   res.json({ ok: true, message: 'Voice assistant API is healthy' });
 });
