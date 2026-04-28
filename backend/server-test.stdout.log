@@ -1,0 +1,6 @@
+◇ injected env (6) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+MongoDB connected
+Backend running on port 5000
+[0mGET /api/health [32m200[0m 2.940 ms - 54[0m
+[0mPOST /api/chat/message [32m200[0m 277.993 ms - 1018[0m
+[0mPOST /api/chat/message [32m200[0m 12095.442 ms - 2739[0m
