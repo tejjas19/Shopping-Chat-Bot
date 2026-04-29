@@ -83,7 +83,10 @@ app.get('/api/health', (req, res) => {
   res.json({ ok: true, message: 'Voice assistant API is healthy' });
 });
 
+// Vercel can forward function routes without the /api prefix, so support both forms.
+app.use('/chat', chatRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/products', productRoutes);
 app.use('/api/products', productRoutes);
 
 // SPA fallback - serve index.html for all non-API GET requests without using a wildcard route
