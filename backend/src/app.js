@@ -86,13 +86,21 @@ app.get('/api/health', (req, res) => {
 app.use('/api/chat', chatRoutes);
 app.use('/api/products', productRoutes);
 
-// SPA fallback - serve index.html for all non-API routes
-app.get('*', (req, res) => {
-  try {
-    res.sendFile(join(frontendDist, 'index.html'));
-  } catch (error) {
-    res.status(404).json({ error: 'Not found' });
+// SPA fallback - serve index.html for all non-API GET requests without using a wildcard route
+app.use((req, res, next) => {
+  if (req.method !== 'GET') {
+    return next();
   }
+
+  if (req.path.startsWith('/api')) {
+    return next();
+  }
+
+  res.sendFile(join(frontendDist, 'index.html'), (error) => {
+    if (error) {
+      return next(error);
+    }
+  });
 });
 
 app.use(notFound);
