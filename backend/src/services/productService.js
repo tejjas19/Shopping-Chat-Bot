@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const SHOPPING_INTENT_PATTERN = /(best|buy|buying|shopping|shoppong|shoping|price|prices|cost|under|budget|affordable|cheap|compare|comparison|deal|deals|discount|recommend|recommended|suggest|suggestion|looking for|find me|show me|want to buy|need to buy|want a|need a|i want|i want to|i need|please show|please suggest|which one|what should i buy|mobile|phone|smartphone|laptop|watch|headphone|earbuds|tv|tablet|camera|shoes|footwear|heels|sandals|sneakers|boots|slippers|loafers|grocery|groceries|grocery item|grocery items|daily needs|toiletries|blinkit|zepto|milk|rice|atta|pulses|oil|bread|fruits|vegetables|chips|snack|snacks|biscuit|biscuits|cookies|chocolate|choco|soap|shampoo|conditioner|toothpaste|detergent|dishwash|cleaner|maggi|noodles|dress|shirt|jeans|bag|bottle|water bottle|steel bottle|bed|chair|table|desk|wardrobe|almirah|curtain|pillow|blanket|bedsheet|fridge|ac|air conditioner|washing machine|microwave|car|cars|bike|scooter|furniture|sofa|mattress|product|products|amazon|flipkart|gift)\b/i;
+const SHOPPING_INTENT_PATTERN = /(best|buy|buying|shopping|shoppong|shoping|price|prices|cost|under|budget|affordable|cheap|compare|comparison|deal|deals|discount|recommend|recommended|suggest|suggestion|looking for|find me|show me|want to buy|need to buy|want a|need a|i want|i want to|i need|please show|please suggest|which one|what should i buy|mobile|phone|smartphone|laptop|watch|headphone|earbuds|earring|earrings|earings|jewelry|jewelery|jewellery|necklace|necklaces|ring|rings|tops|t-shirt|t shirts|tshirt|tshirts|shirt|shirts|dress|dresses|kurti|kurta|saree|fashion|clothes|clothing|camera|tv|tablet|shoes|footwear|heels|sandals|sneakers|boots|slippers|loafers|grocery|groceries|grocery item|grocery items|daily needs|toiletries|blinkit|zepto|milk|rice|atta|pulses|oil|bread|fruits|vegetables|chips|snack|snacks|biscuit|biscuits|cookies|chocolate|choco|soap|shampoo|conditioner|toothpaste|detergent|dishwash|cleaner|maggi|noodles|jeans|bag|bottle|water bottle|steel bottle|bed|chair|table|desk|wardrobe|almirah|curtain|pillow|blanket|bedsheet|fridge|ac|air conditioner|washing machine|microwave|car|cars|bike|scooter|furniture|sofa|mattress|product|products|amazon|flipkart|gift)\b/i;
 
 const createSearchUrl = (baseUrl, query, sourceName) => {
   const safeQuery = encodeURIComponent(query || 'shopping');
@@ -54,7 +54,7 @@ const detectCategory = (query = '', title = '') => {
     return 'cosmetics';
   }
 
-  if (/(dress|shirt|jeans|kurti|saree|clothes|clothing|fashion|jacket|hoodie|tshirt|heels|sandals|sneakers|shoes)/i.test(hay)) {
+  if (/(dress|dresses|shirt|shirts|jeans|kurti|kurta|saree|clothes|clothing|fashion|jacket|hoodie|tshirt|tshirts|t-shirt|tops|top|earring|earrings|earings|jewelry|jewelery|jewellery|necklace|necklaces|ring|rings|heels|sandals|sneakers|shoes)/i.test(hay)) {
     return 'fashion';
   }
 
