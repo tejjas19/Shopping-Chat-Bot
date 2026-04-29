@@ -55,6 +55,21 @@ app.use(
   })
 );
 
+// Serve static frontend files in production
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const frontendDist = join(__dirname, '../../frontend/dist');
+
+// Serve static files from frontend build
+app.use(express.static(frontendDist, { 
+  setHeaders: (res) => {
+    res.setHeader('Cache-Control', 'public, max-age=3600');
+  }
+}));
+
 app.get('/', (req, res) => {
   res.json({
     ok: true,
@@ -70,6 +85,15 @@ app.get('/api/health', (req, res) => {
 
 app.use('/api/chat', chatRoutes);
 app.use('/api/products', productRoutes);
+
+// SPA fallback - serve index.html for all non-API routes
+app.get('*', (req, res) => {
+  try {
+    res.sendFile(join(frontendDist, 'index.html'));
+  } catch (error) {
+    res.status(404).json({ error: 'Not found' });
+  }
+});
 
 app.use(notFound);
 app.use(errorHandler);
