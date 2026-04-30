@@ -7,9 +7,33 @@ dotenv.config();
 const PORT = process.env.PORT || 5000;
 const isVercel = Boolean(process.env.VERCEL);
 
-const start = async () => {
+let dbConnected = false;
+
+const ensureDBConnected = async () => {
+  if (dbConnected || !process.env.MONGODB_URI) {
+    return;
+  }
   try {
     await connectDatabase();
+    dbConnected = true;
+  } catch (error) {
+    console.error('Database connection failed:', error.message);
+  }
+};
+
+app.use(async (req, res, next) => {
+  if (!dbConnected && process.env.MONGODB_URI) {
+    await ensureDBConnected();
+  }
+  next();
+});
+
+const start = async () => {
+  try {
+    if (!isVercel) {
+      await connectDatabase();
+      dbConnected = true;
+    }
 
     if (!isVercel) {
       app.listen(PORT, () => {
@@ -22,6 +46,8 @@ const start = async () => {
   }
 };
 
-await start();
+if (!isVercel) {
+  await start();
+}
 
 export default app;
